@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/bsatrom/weatherSensors/issues"
   },
-  "homepage": "https://github.com/bsatrom/weatherSensors"
+  "homepage": "https://github.com/bsatrom/weatherSensors",
+  "dependencies": {
+    "adc-pi-gpio": "0.0.2",
+    "everlive-sdk": "^1.2.14",
+    "rpi-gpio": "^0.5.1"
+  }
 }
