@@ -26,6 +26,7 @@
   "dependencies": {
     "adc-pi-gpio": "0.0.2",
     "everlive-sdk": "^1.2.14",
+    "gpio-stream": "^1.0.14",
     "rpi-gpio": "^0.5.1"
   }
 }
