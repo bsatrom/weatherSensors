@@ -2,7 +2,7 @@
   "name": "weatherSensors",
   "version": "0.0.1",
   "description": "Weather Sensors, with cloud logging",
-  "main": "default.js",
+  "main": "src/default.js",
   "scripts": {
     "test": "test"
   },
@@ -28,5 +28,9 @@
     "everlive-sdk": "^1.2.14",
     "gpio-stream": "^1.0.14",
     "rpi-gpio": "^0.5.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0"
   }
 }
