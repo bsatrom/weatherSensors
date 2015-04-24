@@ -1,0 +1,26 @@
+{
+  "name": "weatherSensors",
+  "version": "0.0.1",
+  "description": "Weather Sensors, with cloud logging",
+  "main": "default.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bsatrom/weatherSensors"
+  },
+  "keywords": [
+    "Raspberry",
+    "Pi",
+    "Node",
+    "Electronics",
+    "IoT"
+  ],
+  "author": "Brandon Satrom <bsatrom@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bsatrom/weatherSensors/issues"
+  },
+  "homepage": "https://github.com/bsatrom/weatherSensors"
+}
