@@ -1,7 +1,10 @@
-var http = require('http');
-var https = require('https');
-var everive = require('everlive-sdk');
+var storage = require('./storage.js');
 
-setTimeout(function () {
-    //everlive.
+setInterval(function () {
+  var reading = new storage.sensorReading();
+  reading.temperature = 77.33;
+  reading.location.longitude = 122.11;
+  reading.location.latitude = 22;
+
+  storage.logData(reading);
 }, 1000);
