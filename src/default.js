@@ -1,6 +1,6 @@
 var storage = require('./storage.js');
 var gpio = require('pi-gpio');
-var lightSensorPin = 17;
+var lightSensorPin = 22;
 
 function setUp() {
   gpio.open(lightSensorPin, "input", function(err) {
