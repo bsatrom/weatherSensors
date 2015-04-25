@@ -27,7 +27,8 @@
     "adc-pi-gpio": "0.0.2",
     "everlive-sdk": "^1.2.14",
     "gpio-stream": "^1.0.14",
-    "rpi-gpio": "^0.5.1"
+    "rpi-gpio": "^0.5.1",
+    "pi-gpio": "0.0.7"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
