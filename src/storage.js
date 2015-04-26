@@ -1,12 +1,13 @@
 var baasSDK = require('everlive-sdk');
 var tbaas, sensorRepository;
 
-function setUp() {
+function init() {
   tbaas = new baasSDK('GN5HrV1nzDwl8GsK');
   sensorRepository = tbaas.data('sensors');
 }
 
 var storage = {
+  init: init,
   sensorReading: function() {
     this.temperature = 0;
     this.light = 0;
@@ -31,7 +32,5 @@ var storage = {
       });
   }
 };
-
-setUp();
 
 module.exports = storage;
