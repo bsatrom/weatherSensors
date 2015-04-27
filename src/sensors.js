@@ -1,9 +1,33 @@
 var storage = require('./storage.js');
-var gpio = require('pi-gpio');
-var lightSensorPin = 22;
+var ADC = require('adc-po-gpio');
 
-function init() {
-  initPin(lightSensorPin, "input pulldown");
+var lightSensorChannel = 0,
+  tempSensorChannel = 1;
+var analogSensors;
+
+
+function initADC() {
+  var adcConfig = {
+    tolerance : 2,
+		interval : 300,
+		channels : [
+      lightSensorChannel,
+      temperatureSensorChannel
+    ],
+		SPICLK: 12,
+		SPIMISO: 16,
+		SPIMOSI: 18,
+		SPICS: 22
+  };
+
+  var adc = new ADC(adcConfig);
+  adc.init();
+
+  return adc;
+}
+
+function tearDown() {
+  analogSensors.close();
 }
 
 function initPin(pinNumber, direction) {
@@ -17,19 +41,10 @@ function initPin(pinNumber, direction) {
   });
 }
 
-function tearDown() {
-  // Add Pin tear-down logic
-}
-
 var sensors = {
-  init: init,
+  init: initADC,
   readLightSensor: function () {
-    gpio.read(lightSensorPin, function(err, value) {
-      if (err) {
-        console.log('An error ocurred: ' + err);
-        return;
-      }
-
+    analogSensors.read(lightSensorChannel, function(value) {
       console.log('lightValue is: ' +  value);
 
       return value;
@@ -38,4 +53,15 @@ var sensors = {
   tearDown: tearDown()
 };
 
+// ADC Events
+analogSensors.on('ready', function() {
+    console.log('Analog Pins ready, listening to channel...');
+});
+
+adc.on('close', function() {
+	console.log('ADC terminated');
+	process.exit();
+});
+
+// Exports
 module.exports = sensors;
