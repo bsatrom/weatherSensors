@@ -21,6 +21,16 @@ function initADC() {
 
   analogSensors = new ADC(adcConfig);
   analogSensors.init();
+
+  // ADC Events
+  analogSensors.on('ready', function() {
+      console.log('Analog Pins ready, listening to channel...');
+  });
+
+  analogSensors.on('close', function() {
+  	console.log('ADC terminated');
+  	process.exit();
+  });
 }
 
 function tearDown() {
@@ -38,16 +48,6 @@ var sensors = {
   },
   tearDown: tearDown
 };
-
-// ADC Events
-analogSensors.on('ready', function() {
-    console.log('Analog Pins ready, listening to channel...');
-});
-
-analogSensors.on('close', function() {
-	console.log('ADC terminated');
-	process.exit();
-});
 
 // Exports
 module.exports = sensors;
