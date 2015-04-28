@@ -15,9 +15,10 @@ init();
 setInterval(function () {
   var reading = new storage.sensorReading();
 
-  reading.light = sensors.readLightSensor();
+  reading.light = sensors.lightValue;
+  reading.temperature = sensors.tempValue;
 
-  reading.temperature = sensors.readTempSensor();
+  // TODO: Fix These
   reading.location.longitude = 122.11;
   reading.location.latitude = 22;
 
