@@ -1,5 +1,5 @@
 var storage = require('./storage.js');
-var ADC = require('adc-po-gpio');
+var ADC = require('adc-pi-gpio');
 
 var lightSensorChannel = 0,
   tempSensorChannel = 1;
@@ -28,17 +28,6 @@ function initADC() {
 
 function tearDown() {
   analogSensors.close();
-}
-
-function initPin(pinNumber, direction) {
-  gpio.open(pinNumber, direction, function(err) {
-    if (err) {
-      console.log("Error opening pin #" + lightSensorPin + " for " + direction +
-        ". Err: " + err);
-    } else {
-      console.log("Pin #" + lightSensorPin + " opened successfully");
-    }
-  });
 }
 
 var sensors = {
