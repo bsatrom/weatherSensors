@@ -5,7 +5,6 @@ var lightSensorChannel = 0,
   tempSensorChannel = 1;
 var analogSensors;
 
-
 function initADC() {
   var adcConfig = {
     tolerance : 2,
@@ -20,10 +19,8 @@ function initADC() {
 		SPICS: 22
   };
 
-  var adc = new ADC(adcConfig);
-  adc.init();
-
-  return adc;
+  analogSensors = new ADC(adcConfig);
+  analogSensors.init();
 }
 
 function tearDown() {
@@ -47,7 +44,7 @@ analogSensors.on('ready', function() {
     console.log('Analog Pins ready, listening to channel...');
 });
 
-adc.on('close', function() {
+analogSensors.on('close', function() {
 	console.log('ADC terminated');
 	process.exit();
 });
