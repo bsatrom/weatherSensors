@@ -13,10 +13,10 @@ function initADC() {
       lightSensorChannel,
       tempSensorChannel
     ],
-		SPICLK: 12,
-		SPIMISO: 16,
-		SPIMOSI: 18,
-		SPICS: 22
+		SPICLK: 23,
+		SPIMISO: 21,
+		SPIMOSI: 19,
+		SPICS: 24
   };
 
   analogSensors = new ADC(adcConfig);
