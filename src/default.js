@@ -22,11 +22,6 @@ setInterval(function () {
   reading.location.longitude = 122.11;
   reading.location.latitude = 22;
 
-  console.log("LIGHT1: " + sensors.lightValue);
-  console.log("TEMP1: " + sensors.tempValue);
-
-  console.log(JSON.stringify(reading));
-
   storage.logData(reading);
 }, 5000);
 

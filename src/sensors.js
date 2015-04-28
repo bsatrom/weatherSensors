@@ -18,8 +18,8 @@ var channelResponders = [
 
 function initADC() {
   var adcConfig = {
-    tolerance : 2,
-    interval : 300,
+    tolerance : 5,
+    interval : 1000,
     channels : [
       lightSensorChannel,
       tempSensorChannel
