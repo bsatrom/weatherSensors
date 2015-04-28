@@ -11,7 +11,7 @@ function initADC() {
 		interval : 300,
 		channels : [
       lightSensorChannel,
-      temperatureSensorChannel
+      tempSensorChannel
     ],
 		SPICLK: 12,
 		SPIMISO: 16,
