@@ -7,12 +7,12 @@ var analogSensors;
 var lightVal, tempVal;
 
 var channelResponders = [
-  function(value, pct) { // Light Sensor
-    console.log('lightValue is: ' +  value + '. pct: ' + pct);
+  function(value) { // Light Sensor
+    console.log('DEBUG: lightValue is: ' +  value);
     lightVal = value;
   },
-  function(value, pct) { // Temp Sensor
-    console.log('tempValue is: ' +  value + '. pct: ' + pct);
+  function(value) { // Temp Sensor
+    console.log('DEBUG: tempValue is: ' +  value);
     tempVal = value;
   }
 ];
@@ -20,15 +20,15 @@ var channelResponders = [
 function initADC() {
   var adcConfig = {
     tolerance : 2,
-		interval : 300,
-		channels : [
+    interval : 300,
+    channels : [
       lightSensorChannel,
       tempSensorChannel
     ],
-		SPICLK: 23,
-		SPIMISO: 21,
-		SPIMOSI: 19,
-		SPICS: 24
+    SPICLK: 23,
+    SPIMISO: 21,
+    SPIMOSI: 19,
+    SPICS: 24
   };
 
   analogSensors = new ADC(adcConfig);
@@ -36,11 +36,11 @@ function initADC() {
 
   // ADC Events
   analogSensors.on('ready', function() {
-      console.log('Analog Pins ready, listening to channel...');
+      console.log('LOG: Analog Pins ready, listening to channel...');
   });
 
   analogSensors.on('close', function() {
-  	console.log('ADC terminated');
+  	console.log('LOG: ADC terminated');
   	process.exit();
   });
 
@@ -48,10 +48,9 @@ function initADC() {
   analogSensors.on('change', function(data) {
     if (data) {
       var channel = data.channel,
-        value = data.value,
-        pct = data.pct;
+        value = data.value;
 
-      channelResponders[channel](value, pct);
+      channelResponders[channel](value);
     }
   });
 }

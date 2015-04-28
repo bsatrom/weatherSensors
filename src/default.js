@@ -22,8 +22,10 @@ setInterval(function () {
   reading.location.longitude = 122.11;
   reading.location.latitude = 22;
 
+  console.log(JSON.stringify(reading));
+
   storage.logData(reading);
-}, 1000);
+}, 5000);
 
 process.on('SIGTERM', cleanUp);
 process.on('SIGINT', cleanUp);

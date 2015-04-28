@@ -23,11 +23,11 @@ var storage = {
   logData: function(reading) {
     sensorRepository.create(reading,
       function(data) {
-        console.log("Successfully posted sensor data to cloud. " +
+        console.log("LOG: Successfully posted sensor data to cloud. " +
           JSON.stringify(data));
       },
       function(error) {
-        console.log("Error posting sensor data to cloud: " +
+        console.log("ERR: Error posting sensor data to cloud: " +
           JSON.stringify(error));
       });
   }
