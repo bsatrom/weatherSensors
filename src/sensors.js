@@ -4,16 +4,15 @@ var ADC = require('adc-pi-gpio');
 var lightSensorChannel = 0,
   tempSensorChannel = 1;
 var analogSensors;
-var lightVal, tempVal;
 
 var channelResponders = [
   function(value) { // Light Sensor
     console.log('DEBUG: lightValue is: ' +  value);
-    lightVal = value;
+    sensors.lightValue = value;
   },
   function(value) { // Temp Sensor
     console.log('DEBUG: tempValue is: ' +  value);
-    tempVal = value;
+    sensors.tempValue = value;
   }
 ];
 
@@ -61,8 +60,8 @@ function tearDown() {
 
 var sensors = {
   init: initADC,
-  lightValue: lightVal,
-  tempValue: tempVal,
+  lightValue: 0,
+  tempValue: 0,
   tearDown: tearDown
 };
 
