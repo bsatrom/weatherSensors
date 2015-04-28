@@ -36,7 +36,7 @@ var sensors = {
       return value;
     });
   },
-  tearDown: tearDown()
+  tearDown: tearDown
 };
 
 // ADC Events
