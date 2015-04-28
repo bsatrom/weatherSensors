@@ -46,6 +46,13 @@ var sensors = {
       return value;
     });
   },
+  readTempSensor: function () {
+    analogSensors.read(tempSensorChannel, function(value) {
+      console.log('tempValue is: ' +  value);
+
+      return value;
+    });
+  },
   tearDown: tearDown
 };
 

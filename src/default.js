@@ -17,7 +17,7 @@ setInterval(function () {
 
   reading.light = sensors.readLightSensor();
 
-  reading.temperature = 77.33;
+  reading.temperature = sensors.readTempSensor();
   reading.location.longitude = 122.11;
   reading.location.latitude = 22;
 
