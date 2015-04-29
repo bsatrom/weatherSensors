@@ -18,9 +18,6 @@ var storage = {
       'longitude': 0,
       'latitude': 0
     };
-    this.posX = 0;
-    this.posY = 0;
-    this.posZ = 0;
   },
   logData: function(reading) {
     sensorRepository.create(reading,

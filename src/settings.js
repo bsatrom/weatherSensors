@@ -1,5 +1,5 @@
 var settings = {
-  serialPort: "/dev/tty.usbserial-DA014D38",
+  serialPort: "/dev/ttyUSB0",
   baudRate: 9600
 };
 
