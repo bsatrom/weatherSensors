@@ -6,24 +6,31 @@ function init() {
   sensors.init();
 }
 
-function cleanUp() {
-  sensors.tearDown();
-}
-
 init();
 
-setInterval(function () {
-  var reading = new storage.sensorReading();
+//Pause after opening serial to ensure we get good data
+setTimeout(function() {
 
-  reading.light = sensors.lightValue;
-  reading.temperature = sensors.tempValue;
+  if(sensors.connected && sensors.dataReceived) {
 
-  // TODO: Fix These
-  reading.location.longitude = 122.11;
-  reading.location.latitude = 22;
+    setInterval(function () {
+      var reading = new storage.sensorReading();
 
-  storage.logData(reading);
+      reading.light = sensors.lightValue;
+      reading.temperature = sensors.tempValue;
+      reading.pressure = sensors.pressureValue;
+      reading.humidity = sensors.humidityValue;
+
+      console.log("LOG: " + JSON.stringify(reading));
+
+      storage.logData(reading);
+    }, 5000);
+
+  } else {
+    console.log("Serial port not connected or data not received." +
+      " Shutting down.");
+    sensors.tearDown();
+    process.exit();
+  }
+
 }, 5000);
-
-process.on('SIGTERM', cleanUp);
-process.on('SIGINT', cleanUp);

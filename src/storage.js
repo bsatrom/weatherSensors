@@ -11,6 +11,8 @@ var storage = {
   sensorReading: function() {
     this.temperature = 0;
     this.light = 0;
+    this.humidity = 0;
+    this.pressure = 0;
     this.soundLevel = 0;
     this.location = {
       'longitude': 0,

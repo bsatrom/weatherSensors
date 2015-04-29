@@ -1,67 +1,72 @@
-var storage = require('./storage.js');
-var ADC = require('adc-pi-gpio');
+var settings = require('./settings.js');
 
-var lightSensorChannel = 0,
-  tempSensorChannel = 1;
-var analogSensors;
+var com = require("serialport");
+var serialPort;
 
-var channelResponders = [
-  function(value) { // Light Sensor
-    console.log('DEBUG: lightValue is: ' +  value);
-    sensors.lightValue = value;
-  },
-  function(value) { // Temp Sensor
-    console.log('DEBUG: tempValue is: ' +  value);
-    sensors.tempValue = value;
-  }
-];
-
-function initADC() {
-  var adcConfig = {
-    tolerance : 5,
-    interval : 1000,
-    channels : [
-      lightSensorChannel,
-      tempSensorChannel
-    ],
-    SPICLK: 23,
-    SPIMISO: 21,
-    SPIMOSI: 19,
-    SPICS: 24
-  };
-
-  analogSensors = new ADC(adcConfig);
-  analogSensors.init();
-
-  // ADC Events
-  analogSensors.on('ready', function() {
-      console.log('LOG: Analog Pins ready, listening to channel...');
+function initSerial(port) {
+  serialPort = new com.SerialPort(settings.serialPort, {
+    baudrate: settings.baudRate,
+    parser: com.parsers.readline('\r\n')
   });
 
-  analogSensors.on('close', function() {
-  	console.log('LOG: ADC terminated');
-  	process.exit();
-  });
+  serialPort.on('open', function() {
+    sensors.connected = true;
 
-  // Respond to sensor changes
-  analogSensors.on('change', function(data) {
-    if (data) {
-      var channel = data.channel,
-        value = data.value;
+    console.log('LOG: Serial port open');
 
-      channelResponders[channel](value);
-    }
+    //Pause after opening serial to ensure we get good data
+    setTimeout(function() {
+      serialPort.on('data', function(data) {
+
+        data = data.toString();
+        sensors.dataReceived = true;
+
+        console.log('data received: ' + data);
+
+        // Serial doesn't always send a complete string,
+        // so check for begin and end marks
+        if (data.indexOf('{') >= 0 && data.indexOf('}') > 0) {
+          data = data.substring(0, data.indexOf('}') + 1);
+
+          var sensorData = JSON.parse(data);
+          sensors.humidityValue = sensorData.humidity;
+          sensors.lightValue = sensorData.light_lvl;
+          sensors.tempValue = sensorData.tempf;
+          sensors.pressureValue = sensorData.pressure;
+        }
+      });
+    }, 3000);
+
+    serialPort.on('close', function(err) {
+      console.log('LOG: Closing Serial Port');
+    });
+
+    serialPort.on('error', function(err) {
+      console.log('ERROR: ' + err);
+    });
+
+    process.on('SIGTERM', function() {
+      console.log('LOG: closing serial ports...');
+
+      serialPort.close();
+    });
   });
 }
 
 function tearDown() {
-  analogSensors.close();
+  if (sensors.connected) {
+    serialPort.close();
+  }
 }
 
 var sensors = {
-  init: initADC,
+  init: initSerial,
+  connected: false,
+  dataReceived: false,
   lightValue: 0,
   tempValue: 0,
+  pressureValue: 0,
+  humidityValue: 0,
   tearDown: tearDown
 };
 
